@@ -1,0 +1,30 @@
+h1{
+    text-align: center;
+    text-decoration:wavy underline;
+}
+p{
+    background-color: black;
+    color:white; <!--text =color hota hai-->>
+    font-weight:400;
+    line height:1.5; 
+    font-size : 90px;
+}
+button{
+    background-color: blue;
+        color:white;
+}
+h2{
+    font-weight:normal;
+    text-decoration: blue line-through;
+}
+a{
+    text-decoration:none ;
+}
+
+<!--TEXT RELATED PROPERTIES:
+1.text_align
+2.font-weight , normal=400, bold=800, light=100,200
+3.text-decoration, overline, underline, line-through, anchor tag me line hatanbe ke liye bhi use hota h none likh ke
+4.line-height-1.5
+5.font-size- 96px=1 inch--
+6.font-family- aerial, impact, fantasy-->>

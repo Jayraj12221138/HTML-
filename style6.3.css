@@ -1,0 +1,20 @@
+.box{
+    height: 150px;
+    width: 150px;
+    border: 2px solid black;
+    background-color: pink;
+
+
+}
+.one{
+    background-color: aquamarine;
+    /* position: static ; or dynamic; ho tab z-index kaam nhi karta hai  aur bydefault sb element ka z-index 0 hi hota hai  */
+    position: relative;
+    z-index: 1;
+}
+.two{
+    background-color: darksalmon;
+    position: relative;
+    z-index: 2;
+    bottom: 50px;
+}

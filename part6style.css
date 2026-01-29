@@ -1,0 +1,30 @@
+.container{
+    height: 300px;
+    width:600px;
+    background-color: black;
+    display:grid;
+   /* grid-template-rows: 50px 50px 50px 50px;  
+    grid-template-columns:200px 200px 200px ;  "auto "equally columns me width ka divide hona */
+    grid-template-rows: repeat(4,1fr);
+    grid-template-columns: repeat(3,1fr);
+    /* row-gap: 10px;
+    column-gap: 10px; */
+    grid-gap:10px 30px;
+     justify-items: center; /*//start,end,center */
+     align-items: center;
+}
+.item{
+    height:100px;
+    width:100px;
+    background-color: greenyellow;
+    border:2px solid  black;
+}
+.one{
+    /* grid-column-start:1;
+    grid-column-end:3; */
+    grid-column:1/4;
+}
+.two{
+    grid-row-start:1;
+    grid-row-end:3;
+}

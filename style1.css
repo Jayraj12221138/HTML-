@@ -1,0 +1,16 @@
+h1{
+    color:orange;
+}
+p{
+    background-color: black;
+    color:white; <!--text =color hota hai-->>
+}
+button{
+    background-color: blue;
+        color:white;
+}
+
+
+<!--HEXADECIMALCODE SE BHI HMM COLOR change kar sakte hai jaise ki:
+#ffffff-white, #000000-black. #ffff00- yellow--; #fff=#ffffff; #ff0=#ffff00
+rgb(255,255,255)=#ffffff; blue color(0,0,255)=#0000ff>>

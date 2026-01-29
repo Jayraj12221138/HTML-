@@ -1,0 +1,78 @@
+*{
+    font-family: "Courier New";
+}
+h3{
+    color:purple;
+}
+h1{
+    color:#b92b27;    <!--//jab h1 aur h3 ko same color dena ho to  aise h1,h3{
+        color:blue  }          de sakt3e hai//-->>
+}
+#login{
+    background-color:white; <!--id operator ek hi particular element ko choose karta hai jo ki hum button choose kiye hai-->>
+}
+
+#signup {
+    background-color:#b92b27;
+    color:white;
+
+}
+.upvote{
+    background-color: green;
+    color:aliceblue;
+}
+/*descendant selector kisi grouped  tag ko ek baar me colored karna */
+p a{
+    color:purple;
+    background-color: yellow;
+}
+nav ul li{
+    color:pink
+}
+p + h3{
+    text-decoration: underline;
+}
+.upvote + button{
+    background-color:cornflowerblue;
+}
+div>input{
+    background-color: darkgray;  <!--child selector-->>
+}
+input[type]{
+    background-color: ghostwhite;
+}
+#MyId p{
+    color: green;
+}
+button:hover{
+    background-color: black;
+    color:white;
+}
+h3:hover{
+    text-decoration: none;
+}
+button:active{
+    background-color: hotpink;
+}
+p:active{
+    font-weight: bold;
+    color:green;
+}
+input[type="radio"]:checked{
+color:red;
+font-weight:bold;
+}
+h1::first-letter{  <!--heading letter ko change karne ke liye-->
+    color:black
+}
+p::first-letter{
+    color:hotpink;
+}
+p::selection {     
+    background-color: yellow;
+
+}
+<!--NOTE-for specificity notes
+1.id > class > element
+2.more selectors > less selectors 
+3.if specificity same= cascading

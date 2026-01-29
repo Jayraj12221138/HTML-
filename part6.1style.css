@@ -1,0 +1,56 @@
+.box{
+    height: 100px;
+    width: 300px;
+    background-color: pink;
+    /* animation-name: fontAnimation; */
+    /* animation-name: colorAnimate; */
+    /* animation-name: widthAnimate;
+    animation-duration: 2s;
+    animation-timing-function: ease-in;
+    animation-delay: 0;
+    animation-iteration-count: 3;
+    animation-direction:alternate; */
+    animation: colAnimate 3s ease-in 0s 3 normal; /* <!--//sare property ek hi line me-->> */
+}
+@keyframes fontAnimation {
+    from {
+        font-size: 20px;
+    }
+    to {
+        font-size: 40px;
+    }
+}
+/* @keyframes colorAnimate {
+    from {
+        background-color: green;
+    }
+    to {
+        background-color: aquamarine;
+    }
+    
+} */
+
+/* // % animation */
+ @keyframes colAnimate {
+    0%{
+        background-color: green;
+    }
+    50% {
+        background-color: aquamarine;
+    }
+    100% {
+        background-color: black;
+    }
+    
+}
+@keyframes widthAnimate{
+    from {
+        width: 10px;
+        background-color: green;
+    }
+    to {
+        width: 400px;
+        background-color: blue;
+        border-radius: 15px;
+    }
+}

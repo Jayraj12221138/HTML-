@@ -1,0 +1,13 @@
+*{
+   font-family:"Courier New";
+}
+h1{
+    color:  #1b74e4;
+}
+#searchbtn{
+    background-color: black;
+    color:white;
+}
+.userbtn{
+    background-color: aqua;   <!--//ek aur tarika hai id lekar kar sakte hai jaise id=username , id=register login aur register ke liye-->
+}

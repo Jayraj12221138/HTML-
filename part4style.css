@@ -1,0 +1,35 @@
+div{
+    height:100px;
+    width:100px;
+    /* background-color: rgb(255, 0, 0,1); */
+    /* transition: 1s; */
+    background-color: #4dff00ff;
+    margin:0 auto;
+    margin-top: 10px;
+    transition: margin-top 2s ease-in 0.2s;
+}
+
+/* //alpha channel-  means set of color opacity 
+value range(0,1) 
+note- 0 means hidden not-visible
+1 means completely visible 
+in hexcode(00,ff)
+00- means not visible
+ff- means fisible */
+/* 
+opacity - set opacity for element  
+ranges- (0,1) */
+/* 
+#opacity{
+    background-color: #ffa511;
+    opacity:0.5;
+} */
+/* //TRANSITION STATE -CHANGES one state to another by hover */
+/* div:hover{
+    background-color: black;
+    border-radius: 50%;
+} */
+div:hover{
+    margin-top:  400px;
+    background-color: pink;
+}

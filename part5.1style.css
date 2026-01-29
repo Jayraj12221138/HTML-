@@ -1,0 +1,44 @@
+/* 1ans */
+
+#container{
+    height:400px;
+    width:400px;
+    background-color:azure;
+    border: 2px solid lightseagreen;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items:center;
+}
+.box{
+    height: 100px;
+    width:100px;
+    background-color: grey;
+    border:2px solid black;
+    border-radius:10px;
+    font-size:50px;
+    text-align:center;
+}
+
+/*ANS2*/
+#navbar{
+    height:50px;
+    width:900px;
+    background-color:pink;
+    border:2px solis lightseagreen;
+    border-radius: 10px;
+    display: flex;
+    justify-content:flex-start;
+    align-items:center;
+
+
+}
+.option{
+    height:50px;
+    width:80px;
+    border-radius:10px;
+    margin-left: 5px;
+    font-size: 24px;  
+    line-height:50px;
+}

@@ -1,0 +1,25 @@
+/* //for box-shadow
+div{
+    width:200px;
+    height:50px;
+    text-align: center;
+    background-color: #7aa874;
+    margin:10px auto;
+    box-shadow: 2px 2px 8px yellow;
+} */
+/* 
+//for background image */
+
+div{
+    width:800px;
+    height:400px;
+    text-align: center;
+    background-color: #7aa874;
+    margin:10px auto;
+    background-image: url(raj.jpg);
+    background-size:cover; 
+    color:white; 
+    
+/* <!--contain,cover,auto ye teno hmm set karte hai background-size me-->> */ */
+
+}

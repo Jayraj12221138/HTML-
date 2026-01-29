@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gesture 3D Particle System</title>
+
+<style>
+    body { margin: 0; overflow: hidden; background: #000; font-family: sans-serif; }
+    canvas { display: block; }
+    #ui { position: absolute; top: 20px; left: 20px; color: white; }
+    .hint { font-size: 0.8em; opacity: 0.7; }
+    #video-container {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 200px;
+        height: 150px;
+        border: 2px solid #444;
+        border-radius: 8px;
+        overflow: hidden;
+        transform: scaleX(-1);
+    }
+    video { width: 100%; height: 100%; object-fit: cover; }
+</style>
+</head>
+
+<body>
+
+<div id="ui">
+    <h2>Hand-Tracked Particles</h2>
+    <p id="mode-text">Current Template: SPHERE</p>
+    <p class="hint">✋ Open: Shape | ✊ Fist: Attract | 🤏 Pinch: Switch</p>
+</div>
+
+<div id="video-container">
+    <video id="input-video"></video>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
+<script>
+/* ================= CONFIG ================= */
+const PARTICLE_COUNT = 8000;
+const modes = ['sphere', 'heart', 'saturn', 'fireworks'];
+
+let currentTemplate = 'sphere';
+let handX = 0, handY = 0, isFist = false;
+let lastSwitchTime = 0;
+let targets = [];
+
+/* ================= THREE SETUP ================= */
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
+camera.position.z = 18;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(innerWidth, innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const geometry = new THREE.BufferGeometry();
+const positions = new Float32Array(PARTICLE_COUNT * 3);
+const colors = new Float32Array(PARTICLE_COUNT * 3);
+
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+    positions[i*3] = (Math.random() - 0.5) * 20;
+    positions[i*3+1] = (Math.random() - 0.5) * 20;
+    positions[i*3+2] = (Math.random() - 0.5) * 20;
+
+    colors[i*3] = 0.2;
+    colors[i*3+1] = 0.6;
+    colors[i*3+2] = 1.0;
+}
+
+geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+const material = new THREE.PointsMaterial({
+    size: 0.08,
+    vertexColors: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+});
+
+const points = new THREE.Points(geometry, material);
+scene.add(points);
+
+/* ================= SHAPES ================= */
+function generateTargets(type) {
+    targets = [];
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const t = i / PARTICLE_COUNT * Math.PI * 2;
+        const u = (i % 100) / 100 * Math.PI * 2;
+        const v = Math.floor(i / 100) / (PARTICLE_COUNT / 100) * Math.PI;
+
+        let x=0, y=0, z=0;
+
+        if (type === 'heart') {
+            x = 16 * Math.pow(Math.sin(t), 3);
+            y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
+            z = Math.sin(u) * 2;
+            x *= 0.35; y *= 0.35;
+        }
+
+        else if (type === 'saturn') {
+            if (i < PARTICLE_COUNT * 0.6) {
+                x = 5 * Math.sin(v) * Math.cos(u);
+                y = 5 * Math.sin(v) * Math.sin(u);
+                z = 5 * Math.cos(v);
+            } else {
+                const r = 7 + (i % 100) * 0.02;
+                x = r * Math.cos(t * 20);
+                y = Math.sin(t * 20) * 0.3;
+                z = r * Math.sin(t * 20);
+            }
+        }
+
+        else if (type === 'fireworks') {
+            const s = 5 + (i % 100) * 0.05;
+            x = Math.cos(t * 20) * s;
+            y = Math.sin(t * 20) * s;
+            z = Math.sin(u * 10) * s;
+        }
+
+        else { // sphere
+            x = 7 * Math.sin(v) * Math.cos(u);
+            y = 7 * Math.sin(v) * Math.sin(u);
+            z = 7 * Math.cos(v);
+        }
+
+        targets.push({x,y,z});
+    }
+}
+generateTargets(currentTemplate);
+
+/* ================= HAND TRACKING ================= */
+const video = document.getElementById('input-video');
+const hands = new Hands({
+    locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+});
+
+hands.setOptions({
+    maxNumHands: 1,
+    minDetectionConfidence: 0.6,
+    minTrackingConfidence: 0.6
+});
+
+hands.onResults(res => {
+    if (!res.multiHandLandmarks?.length) return;
+    const lm = res.multiHandLandmarks[0];
+
+    handX = (0.5 - lm[8].x) * 30;
+    handY = (0.5 - lm[8].y) * 20;
+
+    const fistDist = Math.hypot(lm[8].x - lm[5].x, lm[8].y - lm[5].y);
+    isFist = fistDist < 0.08;
+
+    const pinch = Math.hypot(lm[4].x - lm[8].x, lm[4].y - lm[8].y);
+    if (pinch < 0.03 && Date.now() - lastSwitchTime > 1000) {
+        currentTemplate = modes[(modes.indexOf(currentTemplate)+1)%modes.length];
+        generateTargets(currentTemplate);
+        document.getElementById('mode-text').innerText =
+            `Current Template: ${currentTemplate.toUpperCase()}`;
+        lastSwitchTime = Date.now();
+    }
+});
+
+new Camera(video, {
+    onFrame: async () => hands.send({image: video}),
+    width: 640, height: 480
+}).start();
+
+/* ================= ANIMATION ================= */
+function animate() {
+    requestAnimationFrame(animate);
+    const p = geometry.attributes.position.array;
+    const c = geometry.attributes.color.array;
+
+    for (let i=0;i<PARTICLE_COUNT;i++) {
+        const i3 = i*3;
+        if (isFist) {
+            p[i3] += (handX - p[i3]) * 0.08;
+            p[i3+1] += (handY - p[i3+1]) * 0.08;
+            p[i3+2] += (0 - p[i3+2]) * 0.08;
+            c[i3]=1; c[i3+1]=0.3; c[i3+2]=0.1;
+        } else {
+            const t = targets[i];
+            p[i3] += (t.x - p[i3]) * 0.04;
+            p[i3+1] += (t.y - p[i3+1]) * 0.04;
+            p[i3+2] += (t.z - p[i3+2]) * 0.04;
+            c[i3]=0.2; c[i3+1]=0.6; c[i3+2]=1;
+        }
+    }
+
+    geometry.attributes.position.needsUpdate = true;
+    geometry.attributes.color.needsUpdate = true;
+
+    points.rotation.y += 0.004;
+    renderer.render(scene, camera);
+}
+
+animate();
+
+addEventListener('resize', ()=>{
+    camera.aspect = innerWidth/innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>

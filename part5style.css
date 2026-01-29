@@ -1,0 +1,39 @@
+#container{
+    height:600px;
+    width:80%;
+    background-color: azure;
+    margin: 10px auto;
+    border:2px solid black;
+    display: flex;
+     flex-direction:row; /*yha pe row bhi likh sakte h column ke jagah */
+     /* flex-direction:row-reverse; ye top to bottom element arrange karta hai 
+     flex-direction:column;
+     flex-direction:column-reverse; ye bottom to top element arrange karta hai*/ 
+     /*justify-content:space-between; /*agar yha pe space-between karenge to bich me space aa jayega element ke bich me */
+     /* justify-content:space-around;
+     justify-content:space-evenly; */
+     justify-content: flex-start;
+      flex-wrap: wrap; 
+     /*align-items:baseline;  /*flex-end,center,baseline karte hai to kisi bhi do element ko height dete hai */
+    align-content:flex-start;  /*flex-end,center*/
+
+}
+#org{
+   /* align-self: baseline; /*flex-end, flex-start,baseline*/
+   /* flex-grow:1; */
+   flex:2 2 100px;
+}
+#blue{
+    /* flex-basis:400px; */
+    flex-grow: 2;
+}
+h1{
+    text-align:center; /*element cross-axis ki tarah align ho jata hai*/
+}
+#container div{
+    height:100px;
+    width: 3000px;px;
+    background-color:white;
+    text-align: center;
+    font-size: 1.5em;
+}

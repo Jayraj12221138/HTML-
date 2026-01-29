@@ -1,0 +1,46 @@
+#mainTopic{
+    color:blue;
+}
+*{
+    text-align: center;
+}
+h1,h2,h3,h4,h5,h6{
+    font-family:Georgia;
+}
+/* div+p,p+p,h3+p{//this is attribute selector 
+    color:white;
+    background-color: cornflowerblue;
+        we can better use <p class="info">...</p> in html
+ and in css we can use 
+  CSS:-
+ .info {
+    color: white;
+    background-color: cornflowerblue;
+}  */ 
+ 
+.info{
+    color:white;
+    background-color: cornflowerblue;
+}
+div button{
+    background-color: purple;
+    color:azure;
+}
+button:hover{
+    background-color: yellow;
+    color:blue;
+}
+p:nth-child(odd){
+    color:yellow;
+}
+h1::first-letter{
+    color:red;
+}
+#yes:checked + label{
+    color:darkgreen;
+}
+
+
+/* h1-element selector (1st)
+.main- class selector(2nd)
+#main content- ID selector(3rd) */
